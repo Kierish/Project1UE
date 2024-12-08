@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "DoorActor.h"
 #include "Lift.h"
+#include "LiftButtonActor.h"
 #include "DrawDebugHelpers.h"
 
 AMainCharacter::AMainCharacter()
@@ -94,11 +95,14 @@ void AMainCharacter::Interact()
         Door->Character = this;
         Door->OnInteract();
     }
-
     ALift* Lift = Cast<ALift>(HitResult.GetActor());
-    if (Lift && HitResult.GetComponent() == Lift->Button)
+    if (Lift && (HitResult.GetComponent() == Lift->Button || HitResult.GetComponent()->IsAttachedTo(Lift->Button)))
     {
-        Lift->Character = this;
         Lift->OnInteract();
+    }
+    ALiftButtonActor* Button = Cast<ALiftButtonActor>(HitResult.GetActor());
+    if (Button)
+    {
+        Button->OnInteract();
     }
 }

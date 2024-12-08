@@ -9,6 +9,7 @@
 
 class UStaticMeshComponent;
 class AMainCharacter;
+class UMaterial;
 UCLASS()
 class PROJECT1_API ALift : public AActor
 {
@@ -16,22 +17,28 @@ class PROJECT1_API ALift : public AActor
 	
 public:	
     UPROPERTY(EditAnywhere)
-    AMainCharacter* Character;
-    UPROPERTY(EditAnywhere)
     UStaticMeshComponent* Button;
 
-	ALift();
+   
+    bool bIsOnTop = false;
+	
+    ALift();
 
    virtual void Tick(float DeltaTime) override;
    void OnInteract();
-
+   
 protected:
     UPROPERTY(EditAnywhere)
     UStaticMeshComponent* Platform;
+    UPROPERTY(EditAnywhere)
+    UStaticMeshComponent* ButtonGlow;
     FTimeline Timeline;
     UPROPERTY(EditAnywhere)
     UCurveFloat* CurveFloat;
-
+    UPROPERTY(EditAnywhere)
+    UMaterial* StopMaterial;
+    UPROPERTY(EditAnywhere)
+    UMaterial* MovingMaterial;
     UPROPERTY(EditAnywhere)
     float Height = 12.f;
     UPROPERTY(EditAnywhere)
@@ -39,7 +46,6 @@ protected:
 
     FVector StartLocation;
     FTimerHandle TimerHandle;
-    bool bIsOnTop = false;
     bool bIsMoving = false;
     UFUNCTION()
     void Move(float Value);

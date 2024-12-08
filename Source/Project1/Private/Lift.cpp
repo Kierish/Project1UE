@@ -12,6 +12,10 @@ ALift::ALift()
 
     Button = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Button"));
     Button->SetupAttachment(Platform);
+
+    ButtonGlow = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ButtonGlow"));
+    ButtonGlow->SetupAttachment(Button);
+    ButtonGlow->SetMaterial(0, StopMaterial);
 }
 
 void ALift::Tick(float DeltaTime)
@@ -39,6 +43,7 @@ void ALift::OnInteract()
         return;
     }
     bIsMoving = true;
+    ButtonGlow->SetMaterial(0, MovingMaterial);
     if (!bIsOnTop)
     {
         Timeline.Play();
@@ -51,6 +56,7 @@ void ALift::OnInteract()
 }
 void ALift::OnMovementComplete()
 {
+    ButtonGlow->SetMaterial(0, StopMaterial);
     bIsMoving = false;
     bIsOnTop = !bIsOnTop;
 }
