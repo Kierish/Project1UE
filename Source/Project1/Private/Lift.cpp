@@ -1,7 +1,7 @@
 // Copyright Kierish. All rights reserved
 
 #include "Lift.h"
-#include "MainCHaracter.h"
+#include "MainCharacter.h"
 
 ALift::ALift()
 {
